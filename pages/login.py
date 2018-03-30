@@ -1,15 +1,18 @@
 
-class LoginPage():
+class LoginPage(object):
 
-    def __init__(self, driver, username, password):
+    def __init__(self, driver):
         self.driver = driver
-        self.url = 'http://127.0.0.1:8000/admin/login/'
-        self.username = username
-        self.password = password
 
     def open(self):
-        self.driver.get(self.url)
         return self
 
-    def login(self):
-        pass
+    def login(self, username, password):
+        login_form = self.driver.find_element_by_id('login-form')
+        id_ = login_form.find_element_by_name('username')
+        pw = login_form.find_element_by_name('password')
+        button = login_form.find_element_by_css_selector('input[value="ログイン"]')
+        id_.send_keys(username)
+        pw.send_keys(password)
+        button.click()
+        return self
