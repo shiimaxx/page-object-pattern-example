@@ -18,23 +18,14 @@ class TestDjangoAdmin(unittest.TestCase):
         self.driver.implicitly_wait(5)
         self.driver.set_page_load_timeout(30)
         self.driver.set_window_size(1920, 1080)
+
+    def test_add_user(self):
         self.driver.get('http://127.0.0.1:8000/admin')
-
-    def test_login(self):
         login_page = LoginPage(self.driver)
-        login_page.login('admin', 'p@ssword')
-
-    # def test_search_not_exists_user(self):
-    #     pass
-
-    # def test_create_user(self):
-    #     pass
-
-    # def test_search_exists_user(self):
-    #     pass
-
-    # def test_delete_user(self):
-    #     pass
+        admin_page = login_page.login('admin', 'p@ssword')
+        add_user_page = admin_page.go_to_add_user_page()
+        change_user_page = add_user_page.add_user('testuser', 'dummy_p@ssword')
+        self.assertIn('testuser</a>" を追加しました。続けて編集できます。</li>', change_user_page.driver.page_source)
 
     def tearDown(self):
         self.driver.close()
