@@ -1,4 +1,4 @@
-from pages.user import AddUserPage
+from pages.user import AddUserPage, UserPage
 
 
 class AdminPage():
